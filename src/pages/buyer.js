@@ -97,19 +97,22 @@ const InputNumber = ({ name }) => {
     />
   );
 };
-const SellerPortal = () => {
+
+const Contract = () => {
   return (
-    <div className="relative bg-gray-800 p-8">
-      <div className="mb-4 bg-gray-100 rounded h-20 content-evenly">
-        <p className="text-lg font-bold ml-4">Seller Request Form</p>
-        <p className="text-sm ml-4">
-          5fd924625f6ab16a19cc9807c7c506ae1813490e4ba675f843d5a10e0baacdb8
-        </p>
-      </div>
+    <>
+      <div className="mb-4 bg-white rounded content-evenly"></div>
       <Form>
+        <label className="block text-gray-900 text-2xl font-bold mb-4">
+          Create Contract
+        </label>
         <FormGroup>
-          <Label htmlFor="name">Seller Address</Label>
+          <Label htmlFor="name">Client Address</Label>
           <Input id="name" name="123 Main St" type="text" />
+        </FormGroup>
+        <FormGroup>
+          <Label htmlFor="name">Return Address</Label>
+          <Input id="name" name="321 Walnut St" type="text" />
         </FormGroup>
         <FormGroup>
           <Label htmlFor="date">Date</Label>
@@ -118,14 +121,18 @@ const SellerPortal = () => {
         <FormGroup>
           <Label htmlFor="product">Product</Label>
           <div className="flex justify-evenly">
-            <ClickOption option="Barrel Chair" />
-            <ClickOption option="Billiard Table" />
-            <ClickOption option="Wicker Accent Cabinet" />
-          </div>
-          <div className="flex justify-evenly">
-            <ClickOption option="Bathroom Vanity" />
-            <ClickOption option="Shoe Storage" />
-            <ClickOption option="Leather Sofa" />
+            <div className="flex-col justify-evenly">
+              <ClickOption option="Barrel Chair" />
+              <ClickOption option="Billiard Table" />
+            </div>
+            <div className="flex-col justify-evenly">
+              <ClickOption option="Wicker Accent Cabinet" />
+              <ClickOption option="Bathroom Vanity" />
+            </div>
+            <div className="flex-col justify-evenly">
+              <ClickOption option="Shoe Storage" />
+              <ClickOption option="Leather Sofa" />
+            </div>
           </div>
         </FormGroup>
         <FormGroup>
@@ -142,6 +149,153 @@ const SellerPortal = () => {
         </FormGroup>
         <Button type="submit">Submit</Button>
       </Form>
+    </>
+  );
+};
+
+const TrackButton = ({ onClick }) => {
+  return (
+    <a href="https://track-9hb1.onrender.com/" target="_blank">
+      <button
+        className="bg-red-950 hover:bg-red-900 text-white font-bold py-2 px-4 rounded-md mt-4 mb-4 mr-2"
+        onClick={onClick}
+      >
+        Track
+      </button>
+    </a>
+  );
+};
+
+const AcceptButton = ({ onClick }) => {
+  return (
+    <a href="#" target="_blank">
+      <button
+        className="bg-green-800 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-md mt-4 mb-4 mr-2"
+        onClick={onClick}
+      >
+        Accept
+      </button>
+    </a>
+  );
+};
+
+const AcceptContractList = ({ contractInfo }) => {
+  return (
+    <>
+      <div className="mb-3 bg-white rounded h-20 ml-20 mr-20 flex place-content-between shadow-md">
+        <div>
+          <p className="text-lg font-bold ml-4">{contractInfo.buyer}</p>
+          <p className="text-sm ml-4 font-bold">{contractInfo.buyerAddress}</p>
+          {contractInfo.paid && (
+            <div className="flex">
+              <p className="text-sm ml-4 font-bold">Paid: </p>
+              <p className="text-sm text-green-600 font-bold"> True</p>
+            </div>
+          )}
+
+          {!contractInfo.paid && (
+            <div className="flex ml-4 font-bold">
+              <p className="text-sm font-bold">Paid: </p>
+              <p className="text-sm text-red-600 font-bold"> False</p>
+            </div>
+          )}
+        </div>
+        <div>
+          <AcceptButton />
+        </div>
+      </div>
+    </>
+  );
+};
+
+const ContractList = ({ contractInfo }) => {
+  return (
+    <>
+      <div className="mb-3 bg-white rounded h-20 ml-20 mr-20 flex place-content-between shadow-md">
+        <div>
+          <p className="text-lg font-bold ml-4">{contractInfo.buyer}</p>
+          <p className="text-sm ml-4 font-bold">{contractInfo.buyerAddress}</p>
+          {contractInfo.paid && (
+            <div className="flex">
+              <p className="text-sm ml-4 font-bold">Paid: </p>
+              <p className="text-sm text-green-600 font-bold"> True</p>
+            </div>
+          )}
+
+          {!contractInfo.paid && (
+            <div className="flex ml-4 font-bold">
+              <p className="text-sm font-bold">Paid: </p>
+              <p className="text-sm text-red-600 font-bold"> False</p>
+            </div>
+          )}
+        </div>
+        <div>
+          <TrackButton />
+        </div>
+      </div>
+    </>
+  );
+};
+
+const contractList = [
+  {
+    buyer: "Big Pete",
+    buyerAddress: "abc123",
+    paid: false,
+  },
+
+  {
+    buyer: "Medium Pete",
+    buyerAddress: "abc123",
+    paid: true,
+  },
+
+  {
+    buyer: "Little Pete",
+    buyerAddress: "abc123",
+    paid: false,
+  },
+];
+
+const SellerPortal = () => {
+  return (
+    <div className="relative bg-gray-800 p-8">
+      <div
+        className=" bg-gray-100
+  shadow-md
+  rounded
+  px-8
+  pt-6
+  pb-8
+  mb-4"
+      >
+        <label className="block text-gray-900 text-2xl font-bold mb-5">
+          Accept a Contract
+        </label>
+        <div className="on-going-contracts">
+          {contractList.map((contract) => (
+            <AcceptContractList contractInfo={contract} />
+          ))}
+        </div>
+        
+      </div>
+
+      <div
+        className=" bg-gray-100
+  shadow-md
+  rounded
+  px-8
+  pt-6
+  pb-8
+  mb-4"
+      >
+        <label className="block text-gray-900 text-2xl font-bold mb-5">
+          Ongoing Contracts
+        </label>
+        {contractList.map((contract) => (
+          <ContractList contractInfo={contract} />
+        ))}
+      </div>
     </div>
   );
 };
