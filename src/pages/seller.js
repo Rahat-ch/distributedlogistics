@@ -107,8 +107,12 @@ const Contract = () => {
           Create Contract
         </label>
         <FormGroup>
-          <Label htmlFor="name">Return Address</Label>
+          <Label htmlFor="name">Client Address</Label>
           <Input id="name" name="123 Main St" type="text" />
+        </FormGroup>
+        <FormGroup>
+          <Label htmlFor="name">Return Address</Label>
+          <Input id="name" name="321 Walnut St" type="text" />
         </FormGroup>
         <FormGroup>
           <Label htmlFor="date">Date</Label>

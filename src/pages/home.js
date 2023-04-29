@@ -56,7 +56,6 @@ const Sidebar = () => {
                 className="block py-2 px-4 text-white hover:bg-gray-700 rounded"
                 onClick={() => showComponent("seller")}
               >
-                <img src={SellerImage} />
                 Seller
               </a>
               <a
