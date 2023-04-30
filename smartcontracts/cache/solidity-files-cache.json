@@ -1,0 +1,40 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "/Users/rahatchowdhury/Desktop/dev/hackathons/distributedlogistics/smartcontracts/contracts/DistributedBill.sol": {
+      "lastModificationDate": 1682825473597,
+      "contentHash": "2749884bca18d34a497027fca717c069",
+      "sourceName": "contracts/DistributedBill.sol",
+      "solcConfig": {
+        "version": "0.8.9",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "DistributedBill"
+      ]
+    }
+  }
+}
