@@ -1,27 +1,3 @@
-<<<<<<< HEAD
-import dynamic from "next/dynamic";
-import { Suspense } from "react";
-
-const Seller = () => {
-  const DynamicIndex = dynamic(
-    () => import("../dynamicpages/seller").then((res) => res.default),
-    {
-      ssr: false,
-    }
-  );
-  
-  
-  return (
-    <div>
-      <Suspense fallback={<div>Loading...</div>}>
-        <DynamicIndex />
-      </Suspense>
-    </div>
-  );
-};
-
-export default Seller;
-=======
 import React, { useState } from "react";
 import Sidebar from "@/pages/home";
 
@@ -427,5 +403,4 @@ export default SellerPortal;
 // date created
 // bool is paid
 // array of items
->>>>>>> d3194f17da7e6e1e9074cbecfccf693352074269
 

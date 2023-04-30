@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { contractABI, contractAddress } from "../utils/constants";
 
@@ -74,61 +76,63 @@ export const BillingProvider = ({ children }) => {
   };
 
   const createBill = async () => {
-    try {
-      if (!ethereum) return alert("Please install Metamask");
-      const {
-        sellerAddress,
-        receiverAddress,
-        buyerPhysicalAddress,
-        returnAddress,
-        date,
-        products,
-        quantity,
-        description,
-        price,
-        transactionID,
-      } = contractData;
-      const billingContract = getEthereumContract();
-      await ethereum.request({
-        method: "eth_sendTransaction",
-        params: [
-          {
-            from: currentAccount,
-            to: receiverAddress,
-            gas: "0x5208",
-            value: ethers.utils.parseEther("0.000001")._hex,
-          },
-        ],
-      });
-      //             address receiverAddress,
-      // string memory buyerPhysicalAddress,
-      // string memory returnAddress,
-      // string memory date,
-      // string[] memory products,
-      // uint256 quantity,
-      // string memory description,
-      // uint256 price,
-      // uint256 transactionID
-      const billingHash = await billingContract.addToBlockchain(
-        receiverAddress,
-        buyerPhysicalAddress,
-        returnAddress,
-        date,
-        products,
-        quantity,
-        description,
-        price,
-        transactionID
-      );
+    alert("billing!")
+    // toast("Wow so easy!");
+    // try {
+    //   if (!ethereum) return alert("Please install Metamask");
+    //   const {
+    //     sellerAddress,
+    //     receiverAddress,
+    //     buyerPhysicalAddress,
+    //     returnAddress,
+    //     date,
+    //     products,
+    //     quantity,
+    //     description,
+    //     price,
+    //     transactionID,
+    //   } = contractData;
+    //   const billingContract = getEthereumContract();
+    //   await ethereum.request({
+    //     method: "eth_sendTransaction",
+    //     params: [
+    //       {
+    //         from: currentAccount,
+    //         to: receiverAddress,
+    //         gas: "0x5208",
+    //         value: ethers.utils.parseEther("0.000001")._hex,
+    //       },
+    //     ],
+    //   });
+    //   //             address receiverAddress,
+    //   // string memory buyerPhysicalAddress,
+    //   // string memory returnAddress,
+    //   // string memory date,
+    //   // string[] memory products,
+    //   // uint256 quantity,
+    //   // string memory description,
+    //   // uint256 price,
+    //   // uint256 transactionID
+    //   const billingHash = await billingContract.addToBlockchain(
+    //     receiverAddress,
+    //     buyerPhysicalAddress,
+    //     returnAddress,
+    //     date,
+    //     products,
+    //     quantity,
+    //     description,
+    //     price,
+    //     transactionID
+    //   );
 
-      setIsLoading(true);
-      console.log(`Loading... ${billingHash}`);
-      await billingHash.wait();
-      setIsLoading(false);
-      console.log(`Succcess ${billingHash}`);
-    } catch (err) {
-      console.log(err);
-    }
+    //   setIsLoading(true);
+    //   console.log(`Loading... ${billingHash}`);
+    //   await billingHash.wait();
+    //   setIsLoading(false);
+    //   console.log(`Succcess ${billingHash}`);
+    // } catch (err) {
+    //   console.log(err);
+    // }
   };
 
   useEffect(() => {

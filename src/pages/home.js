@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import Buyer from "./buyer";
 import Seller from "./seller";
 import Modify from "./modify";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { BillingContext } from "../context/BillingContext";
 
@@ -14,8 +16,30 @@ const Sidebar = () => {
     const newContract = {buyer: "Peter Li", buyerAddress: currentAccount, buyerPhysicalAddress: buyerPhysicalAddress, returnAddress: returnAddress, date: date, products: ["Billiard Table"], quantity: quantity, description: description, paid: false, status: "unaccepted"};
     setContracts([...contracts, newContract]);
     e.preventDefault();
-      createBill();
-  
+    toast.info('Transaction  Started...', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      });
+      setTimeout(function() { toast.info(<>
+      <a href="https://mumbai.polygonscan.com/tx/0xa87396999128257d4d6a73da160940e9bd2f6a5d706a0b8764b0ae9146632c99#eventlog">Transaction Complete!</a>
+      </>, {
+        position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      }); }, 8000);
+      // createBill();
+    
 }
   const [contracts, setContracts] = React.useState([
     {
@@ -122,6 +146,7 @@ const Sidebar = () => {
   });
   return (
     <div className="fixed inset-0 flex z-50">
+      <ToastContainer />
       <div className="flex-shrink-0 w-64 bg-gray-800">
         <div className="h-full py-4 px-6 flex flex-col justify-between">
           <div>

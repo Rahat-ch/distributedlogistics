@@ -21,18 +21,13 @@ const SmartAccountProvider = dynamic(
 
 export default function App({ Component, pageProps }) {
   return (
-<<<<<<< HEAD
+
     <Web3AuthProvider>
+      <BillingProvider>
       <SmartAccountProvider>
     <Component {...pageProps} />
     </SmartAccountProvider>
+    </BillingProvider>
     </Web3AuthProvider>
-=======
-    <>
-    <BillingProvider>
-    <Component {...pageProps} />
-      </BillingProvider>
-    </>
->>>>>>> d3194f17da7e6e1e9074cbecfccf693352074269
   );
 }
