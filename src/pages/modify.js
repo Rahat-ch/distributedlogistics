@@ -45,7 +45,7 @@ const Label = ({ children }) => {
   );
 };
 
-const ClickOption = ({ option }) => {
+const ClickOption = ({ option, value }) => {
   return (
     <div className="mb-4 ml-4">
       <div className="flex items-center">
@@ -53,6 +53,7 @@ const ClickOption = ({ option }) => {
           className="mr-2 leading-tight w-{1/2}"
           type="checkbox"
           id="checkbox_id"
+          defaultValue={value}
         />
         <label className="text-lg text-gray-700">{option}</label>
       </div>
@@ -117,17 +118,17 @@ const Contract = ({template}) => {
         </FormGroup>
         <FormGroup>
           <Label htmlFor="name">Return Address</Label>
-          <Input id="name" name="321 Walnut St" type="text" />
+          <Input id="name" name="321 Walnut St" type="text" value={template.returnAddress}/>
         </FormGroup>
         <FormGroup>
           <Label htmlFor="date">Date</Label>
-          <Input id="date" name="MM/DD/YYYY" type="text" />
+          <Input id="date" name="MM/DD/YYYY" type="text" value={template.date}/>
         </FormGroup>
         <FormGroup>
           <Label htmlFor="product">Product</Label>
           <div className="flex justify-evenly">
             <div className="flex-col justify-evenly">
-              <ClickOption option="Barrel Chair" />
+              <ClickOption option="Barrel Chair"/>
               <ClickOption option="Billiard Table" />
             </div>
             <div className="flex-col justify-evenly">
@@ -142,7 +143,7 @@ const Contract = ({template}) => {
         </FormGroup>
         <FormGroup>
           <Label htmlFor="quantity">Quantity</Label>
-          <InputNumber id="quantity" name="#" />
+          <InputNumber id="quantity" name="#" value={template.quantity}/>
         </FormGroup>
         <FormGroup>
           <Label htmlFor="description">Description</Label>
@@ -150,6 +151,7 @@ const Contract = ({template}) => {
             id="description"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             rows="4"
+            defaultValue={template.description}
           ></textarea>
         </FormGroup>
         <Button type="submit">Submit</Button>
