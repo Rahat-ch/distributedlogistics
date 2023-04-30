@@ -12,6 +12,7 @@ const getEthereumContract = () => {
   return contract;
 };
 
+
 export const BillingProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [currentAccount, setCurrentAccount] = useState("");
@@ -38,7 +39,10 @@ export const BillingProvider = ({ children }) => {
     transactionID: 0,
   });
   const handleChange = (e) => {
-    setContractData((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
+    setContractData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
   };
   const checkMetamask = async () => {
     try {
