@@ -179,6 +179,19 @@ const AcceptButton = ({ onClick }) => {
   );
 };
 
+const RejectButton = ({ onClick }) => {
+  return (
+    <a href="#" target="_blank">
+      <button
+        className="bg-red-800 hover:bg-red-900 text-white font-bold py-2 px-4 rounded-md mt-4 mb-4 mr-2"
+        onClick={onClick}
+      >
+        Reject
+      </button>
+    </a>
+  );
+};
+
 const AcceptContractList = ({ contractInfo }) => {
   return (
     <>
@@ -202,6 +215,7 @@ const AcceptContractList = ({ contractInfo }) => {
         </div>
         <div>
           <AcceptButton />
+          <RejectButton />
         </div>
       </div>
     </>
@@ -237,27 +251,7 @@ const ContractList = ({ contractInfo }) => {
   );
 };
 
-const contractList = [
-  {
-    buyer: "Big Pete",
-    buyerAddress: "abc123",
-    paid: false,
-  },
-
-  {
-    buyer: "Medium Pete",
-    buyerAddress: "abc123",
-    paid: true,
-  },
-
-  {
-    buyer: "Little Pete",
-    buyerAddress: "abc123",
-    paid: false,
-  },
-];
-
-const SellerPortal = () => {
+const SellerPortal = ({contracts, setContracts}) => {
   return (
     <div className="relative bg-gray-800 p-8">
       <div
@@ -273,7 +267,7 @@ const SellerPortal = () => {
           Accept a Contract
         </label>
         <div className="on-going-contracts">
-          {contractList.map((contract) => (
+          {contracts.map((contract) => (
             <AcceptContractList contractInfo={contract} />
           ))}
         </div>
@@ -292,7 +286,7 @@ const SellerPortal = () => {
         <label className="block text-gray-900 text-2xl font-bold mb-5">
           Ongoing Contracts
         </label>
-        {contractList.map((contract) => (
+        {contracts.map((contract) => (
           <ContractList contractInfo={contract} />
         ))}
       </div>

@@ -33,7 +33,7 @@ const Form = ({ children }) => {
   );
 };
 
-const FormGroup = ({children}) => {
+const FormGroup = ({ children }) => {
   return <div className="mb-4">{children}</div>;
 };
 
@@ -45,7 +45,7 @@ const Label = ({ children }) => {
   );
 };
 
-const ClickOption = ({option}) => {
+const ClickOption = ({ option }) => {
   return (
     <div className="mb-4 ml-4">
       <div className="flex items-center">
@@ -58,9 +58,9 @@ const ClickOption = ({option}) => {
       </div>
     </div>
   );
-}
+};
 
-const Input = ({name}) => {
+const Input = ({ name, value }) => {
   return (
     <input
       className="shadow
@@ -74,12 +74,13 @@ const Input = ({name}) => {
   leading-tight
   focus:outline-none
   focus:shadow-outline"
-  placeholder={name}
+      placeholder={name}
+      defaultValue={value}
     />
   );
 };
 
-const InputNumber = ({ name }) => {
+const InputNumber = ({ name, value }) => {
   return (
     <input
       className="shadow
@@ -92,23 +93,27 @@ const InputNumber = ({ name }) => {
   leading-tight
   focus:outline-none
   focus:shadow-outline"
-  type="number"
+      type="number"
       placeholder={name}
+      defaultValue={value}
     />
   );
 };
 
-const Contract = () => {
+const Contract = ({template}) => {
   return (
     <>
       <div className="mb-4 bg-white rounded content-evenly"></div>
       <Form>
         <label className="block text-gray-900 text-2xl font-bold mb-4">
-          Create Contract
+          Edit Contract
+        </label>
+        <label className="block text-gray-900 text-md mb-4">
+          {template.buyerAddress}
         </label>
         <FormGroup>
           <Label htmlFor="name">Client Address</Label>
-          <Input id="name" name="123 Main St" type="text" />
+          <Input id="name" name="123 Main St" type="text" value={template.buyerPhysicalAddress}/>
         </FormGroup>
         <FormGroup>
           <Label htmlFor="name">Return Address</Label>
@@ -151,89 +156,16 @@ const Contract = () => {
       </Form>
     </>
   );
-}
-
-const TrackButton = ({ onClick }) => {
-  return (
-    <a href="https://track-9hb1.onrender.com/" target="_blank">
-      <button
-        className="bg-red-950 hover:bg-red-900 text-white font-bold py-2 px-4 rounded-md mt-4 mb-4 mr-2"
-        onClick={onClick}
-      >
-        Track
-      </button>
-    </a>
-  );
 };
 
-const ModifyButton = ({ onClick }) => {
-  return (
-    <button
-      className="bg-gray-950 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-md mt-4 mb-4 mr-2"
-      onClick={onClick}
-    >
-      Modify
-    </button>
-  );
-};
-
-const ContractList = ({contractInfo, showComponent, setCurrentContract}) => {
-
-  return (
-    <>
-      <div className="mb-3 bg-white rounded h-20 ml-20 mr-20 flex place-content-between shadow-md">
-        <div>
-          <p className="text-lg font-bold ml-4">{contractInfo.buyer}</p>
-          <p className="text-sm ml-4 font-bold">{contractInfo.buyerAddress}</p>
-          {contractInfo.paid && (
-            <div className="flex">
-              <p className="text-sm ml-4 font-bold">Paid: </p>
-              <p className="text-sm text-green-600 font-bold"> True</p>
-            </div>
-          )}
-
-          {!contractInfo.paid && (
-            <div className="flex ml-4 font-bold">
-              <p className="text-sm font-bold">Paid: </p>
-              <p className="text-sm text-red-600 font-bold"> False</p>
-            </div>
-          )}
-        </div>
-        <div>
-          <ModifyButton onClick={() => {showComponent("modify"); setCurrentContract(contractInfo)}}/>
-          <TrackButton />
-        </div>
-      </div>
-    </>
-  );
-}
-
-const SellerPortal = ({contracts, showComponent, setCurrentContract}) => {
+const ModifyPortal = ({ contracts, setContracts, contract }) => {
   return (
     <div className="relative bg-gray-800 p-8">
-      <div
-        className=" bg-gray-100
-  shadow-md
-  rounded
-  px-8
-  pt-6
-  pb-8
-  mb-4"
-      >
-        <label className="block text-gray-900 text-2xl font-bold mb-5">
-          Ongoing Contracts
-        </label>
-        {contracts.map((contract) => (
-          <ContractList contractInfo={contract} showComponent={showComponent} setCurrentContract={setCurrentContract}/>
-        ))}
-      </div>
-      <hr className="border-dotted" />
-      <Contract />
+      <Contract template={contract}/>
     </div>
   );
-  };
-export default SellerPortal;
-
+};
+export default ModifyPortal;
 
 // address buyer
 // address seller
