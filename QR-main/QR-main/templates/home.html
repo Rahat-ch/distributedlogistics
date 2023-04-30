@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html >
+<h1 style="text-align: center;">Carrier Portal</h1>
+<br>
+<br>
+<br>
+<br>
+<h3 style="text-align: center;">Terms of agreement as of today: <span id="date"></span></h3>
+
+<script>
+  var today = new Date();
+  var date = today.getDate();
+  var month = today.getMonth() + 1; //January is 0!
+  var year = today.getFullYear();
+
+  // add leading zero to single-digit days and months
+  if (date < 10) {
+    date = '0' + date;
+  }
+  if (month < 10) {
+    month = '0' + month;
+  }
+
+  document.getElementById('date').innerHTML = month + '/' + date + '/' + year;
+
+  
+
+</script>
+<p style="font-size: 15px;text-align: center;">Just Scanned: CD1002</p>
+  <p style="font-size: 15px;text-align: center;">Cartons remaining for this contract : 23</p>
+  <p style="font-size: 15px;text-align: center;">Cartons remaining for this consignment : 41</p>
+</html>

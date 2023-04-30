@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Sidebar from "@/pages/home";
 
-const Button = ({ children }) => {
+const Button = ({ children, handleSubmit }) => {
   return (
     <button
       className="  bg-blue-900
@@ -11,6 +11,7 @@ const Button = ({ children }) => {
   py-2
   px-4
   rounded"
+      onClick={handleSubmit}
     >
       {children}
     </button>
@@ -60,7 +61,7 @@ const ClickOption = ({ option }) => {
   );
 };
 
-const Input = ({ name }) => {
+const Input = ({ placeholder, name, handleChange }) => {
   return (
     <input
       className="shadow
@@ -74,12 +75,14 @@ const Input = ({ name }) => {
   leading-tight
   focus:outline-none
   focus:shadow-outline"
-      placeholder={name}
+      name={name}
+      onChange={handleChange}
+      placeholder={placeholder}
     />
   );
 };
 
-const InputNumber = ({ name }) => {
+const InputNumber = ({ placeholder, name, handleChange }) => {
   return (
     <input
       className="shadow
@@ -93,12 +96,25 @@ const InputNumber = ({ name }) => {
   focus:outline-none
   focus:shadow-outline"
       type="number"
-      placeholder={name}
+      onChange={handleChange}
+      placeholder={placeholder}
+      name={name}
     />
   );
 };
 
-const Contract = () => {
+//     address sellerAddress,
+// address receiverAddress,
+// string buyerPhysicalAddress,
+// string returnAddress,
+// string date,
+// string[] products,
+// uint256 quantity,
+// string description,
+// uint256 price,
+// uint256 transactionID
+
+const Contract = ({ handleChange, handleSubmit }) => {
   return (
     <>
       <div className="mb-4 bg-white rounded content-evenly"></div>
@@ -108,15 +124,33 @@ const Contract = () => {
         </label>
         <FormGroup>
           <Label htmlFor="name">Client Address</Label>
-          <Input id="name" name="123 Main St" type="text" />
+          <Input
+            id="buyerPhysicalAddress"
+            placeholder="123 Main St"
+            type="text"
+            name="buyerPhysicalAddress"
+            handleChange={handleChange}
+          />
         </FormGroup>
         <FormGroup>
           <Label htmlFor="name">Return Address</Label>
-          <Input id="name" name="321 Walnut St" type="text" />
+          <Input
+            id="returnAddress"
+            placeholder="321 Walnut St"
+            type="text"
+            name="returnAddress"
+            handleChange={handleChange}
+          />
         </FormGroup>
         <FormGroup>
           <Label htmlFor="date">Date</Label>
-          <Input id="date" name="MM/DD/YYYY" type="text" />
+          <Input
+            id="date"
+            placeholder="MM/DD/YYYY"
+            type="text"
+            name="date"
+            handleChange={handleChange}
+          />
         </FormGroup>
         <FormGroup>
           <Label htmlFor="product">Product</Label>
@@ -137,17 +171,24 @@ const Contract = () => {
         </FormGroup>
         <FormGroup>
           <Label htmlFor="quantity">Quantity</Label>
-          <InputNumber id="quantity" name="#" />
+          <InputNumber
+            id="quantity"
+            placeholder="#"
+            name="quantity"
+            handleChange={handleChange}
+          />
         </FormGroup>
         <FormGroup>
           <Label htmlFor="description">Description</Label>
           <textarea
             id="description"
+            name="description"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             rows="4"
+            onChange={handleChange}
           ></textarea>
         </FormGroup>
-        <Button type="submit">Submit</Button>
+        <Button handleSubmit={handleSubmit}>Submit</Button>
       </Form>
     </>
   );
@@ -166,12 +207,24 @@ const TrackButton = ({ onClick }) => {
   );
 };
 
-const AcceptButton = ({ onClick }) => {
+function removeFromList(list, item) {
+  return list.filter((listItem) => listItem !== item);
+}
+
+function replaceInList(list, item, newItem) {
+  return list.map((listItem) => (listItem === item ? newItem : listItem));
+}
+
+const AcceptButton = ({ contractInfo, setContracts, contracts }) => {
   return (
-    <a href="#" target="_blank">
+    <a href="#">
       <button
         className="bg-green-800 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-md mt-4 mb-4 mr-2"
-        onClick={onClick}
+        onClick={() => {
+          let oldContract = contractInfo;
+          contractInfo.status = "accepted";
+          setContracts(replaceInList(contracts, oldContract, contractInfo));
+        }}
       >
         Accept
       </button>
@@ -179,13 +232,32 @@ const AcceptButton = ({ onClick }) => {
   );
 };
 
-const AcceptContractList = ({ contractInfo }) => {
+const RejectButton = ({ contractInfo, setContracts, contracts }) => {
+  return (
+    <a href="#">
+      <button
+        className="bg-red-800 hover:bg-red-900 text-white font-bold py-2 px-4 rounded-md mt-4 mb-4 mr-2"
+        onClick={() => {
+          setContracts(removeFromList(contracts, contractInfo));
+        }}
+      >
+        Reject
+      </button>
+    </a>
+  );
+};
+
+const AcceptContractList = ({ contractInfo, setContracts, contracts }) => {
   return (
     <>
       <div className="mb-3 bg-white rounded h-20 ml-20 mr-20 flex place-content-between shadow-md">
         <div>
-          <p className="text-lg font-bold ml-4">{contractInfo.buyer}</p>
-          <p className="text-sm ml-4 font-bold">{contractInfo.buyerAddress}</p>
+          <p className="text-lg font-bold ml-4">{contractInfo.products[0]}</p>
+          <a href="https://sepolia.etherscan.io/${contractInfo.buyerAddress}">
+            <p className="text-sm ml-4 font-bold">
+              {contractInfo.buyerAddress}
+            </p>
+          </a>
           {contractInfo.paid && (
             <div className="flex">
               <p className="text-sm ml-4 font-bold">Paid: </p>
@@ -201,7 +273,16 @@ const AcceptContractList = ({ contractInfo }) => {
           )}
         </div>
         <div>
-          <AcceptButton />
+          <AcceptButton
+            contractInfo={contractInfo}
+            setContracts={setContracts}
+            contracts={contracts}
+          />
+          <RejectButton
+            contractInfo={contractInfo}
+            setContracts={setContracts}
+            contracts={contracts}
+          />
         </div>
       </div>
     </>
@@ -213,8 +294,12 @@ const ContractList = ({ contractInfo }) => {
     <>
       <div className="mb-3 bg-white rounded h-20 ml-20 mr-20 flex place-content-between shadow-md">
         <div>
-          <p className="text-lg font-bold ml-4">{contractInfo.buyer}</p>
-          <p className="text-sm ml-4 font-bold">{contractInfo.buyerAddress}</p>
+          <p className="text-lg font-bold ml-4">{contractInfo.products[0]}</p>
+          <a href="https://sepolia.etherscan.io/${contractInfo.buyerAddress}">
+            <p className="text-sm ml-4 font-bold">
+              {contractInfo.buyerAddress}
+            </p>
+          </a>
           {contractInfo.paid && (
             <div className="flex">
               <p className="text-sm ml-4 font-bold">Paid: </p>
@@ -237,48 +322,17 @@ const ContractList = ({ contractInfo }) => {
   );
 };
 
-const contractList = [
-  {
-    buyer: "Big Pete",
-    buyerAddress: "abc123",
-    paid: false,
-  },
-
-  {
-    buyer: "Medium Pete",
-    buyerAddress: "abc123",
-    paid: true,
-  },
-
-  {
-    buyer: "Little Pete",
-    buyerAddress: "abc123",
-    paid: false,
-  },
-];
-
-const SellerPortal = () => {
+const SellerPortal = ({
+  contracts,
+  setContracts,
+  showComponent,
+  setCurrentContract,
+  handleChange,
+  handleSubmit,
+}) => {
   return (
     <div className="relative bg-gray-800 p-8">
-      <div
-        className=" bg-gray-100
-  shadow-md
-  rounded
-  px-8
-  pt-6
-  pb-8
-  mb-4"
-      >
-        <label className="block text-gray-900 text-2xl font-bold mb-5">
-          Accept a Contract
-        </label>
-        <div className="on-going-contracts">
-          {contractList.map((contract) => (
-            <AcceptContractList contractInfo={contract} />
-          ))}
-        </div>
-        
-      </div>
+
 
       <div
         className=" bg-gray-100
@@ -292,10 +346,15 @@ const SellerPortal = () => {
         <label className="block text-gray-900 text-2xl font-bold mb-5">
           Ongoing Contracts
         </label>
-        {contractList.map((contract) => (
-          <ContractList contractInfo={contract} />
-        ))}
+        {contracts.map((contract) =>
+          contract.status == "accepted" ? (
+            <ContractList contractInfo={contract} />
+          ) : (
+            <></>
+          )
+        )}
       </div>
+      <Contract handleChange={handleChange} handleSubmit={handleSubmit} />
     </div>
   );
 };
