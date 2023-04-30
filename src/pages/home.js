@@ -11,46 +11,48 @@ const Sidebar = () => {
 
   const handleSubmit = (e) => {
     const {buyerPhysicalAddress, returnAddress, date, quantity, description} = contractData;
+    const newContract = {buyer: "Peter Li", buyerAddress: currentAccount, buyerPhysicalAddress: buyerPhysicalAddress, returnAddress: returnAddress, date: date, products: ["Billiard Table"], quantity: quantity, description: description, paid: false, status: "unaccepted"};
+    setContracts([...contracts, newContract]);
     e.preventDefault();
       createBill();
   
 }
   const [contracts, setContracts] = React.useState([
     {
-      buyer: "Big Pete",
+      buyer: "James Hill",
       buyerAddress: "0x8aa395Ab97837576aF9cd6946C79024ef1acfdbE",
       buyerPhysicalAddress: "123 Main St",
       returnAddress: "321 Walnut St",
       date: "12/12/2020",
       products: ["Barrel Chair", "Billiard Table"],
       quantity: 2,
-      description: "some jargon",
+      description: "Some really really good furniture.",
       paid: false,
       status: "accepted",
     },
 
     {
-      buyer: "Medium Pete",
+      buyer: "Koval Smith",
       buyerAddress: "0x8aa395Ab97837576aF9cd6946C79024ef1acfdbE",
       buyerPhysicalAddress: "123 Main St",
       returnAddress: "321 Walnut St",
       date: "12/12/2020",
       products: ["Wicker Accent Cabinet", "Bathroom Vanity"],
       quantity: 2,
-      description: "some jargon",
+      description: "Amazing furniture.",
       paid: true,
       status: "unaccepted",
     },
 
     {
-      buyer: "Little Pete",
+      buyer: "Tim Cook",
       buyerAddress: "0xCF8e569A97C423952DdFf902375C7C76549A6A90",
       buyerPhysicalAddress: "123 Main St",
       returnAddress: "321 Walnut St",
       date: "12/12/2020",
       products: ["Shoe Storage", "Leather Sofa"],
-      quantity: 2,
-      description: "some jargon",
+      quantity: 5,
+      description: "Fantastic furniture.",
       paid: false,
       status: "rejected",
     },
@@ -62,8 +64,8 @@ const Sidebar = () => {
       returnAddress: "321 Walnut St",
       date: "12/12/2020",
       products: ["Shoe Storage", "Leather Sofa"],
-      quantity: 2,
-      description: "some jargon",
+      quantity: 8,
+      description: "Couldn't be better furniture.",
       paid: false,
       status: "unaccepted",
     },
@@ -76,7 +78,7 @@ const Sidebar = () => {
       date: "12/12/2020",
       products: ["Shoe Storage", "Leather Sofa"],
       quantity: 2,
-      description: "some jargon",
+      description: "The next iPad of furniture.",
       paid: true,
       status: "accepted",
     },
@@ -156,7 +158,13 @@ const Sidebar = () => {
       </div>
       <div className="flex-1 overflow-y-auto">
         {showBuyer && (
-          <Buyer contracts={contracts} setContracts={setContracts} />
+          <Buyer contracts={contracts} 
+          setContracts={setContracts}
+          showComponent={showComponent}
+          setCurrentContract={setCurrentContract}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+           />
         )}
         {showSeller && (
           <Seller
