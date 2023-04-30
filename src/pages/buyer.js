@@ -119,7 +119,7 @@ const ContractList = ({ contractInfo }) => {
 
 const SellerPortal = ({contracts, setContracts, handleChange}) => {
   return (
-    <div className="relative bg-gray-800 p-8">
+    <div className="relative bg-gray-800 p-8 h-full">
       <div
         className=" bg-gray-100
   shadow-md

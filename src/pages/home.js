@@ -65,7 +65,7 @@ const Sidebar = () => {
       quantity: 2,
       description: "some jargon",
       paid: false,
-      status: "accepted",
+      status: "unaccepted",
     },
 
     {
