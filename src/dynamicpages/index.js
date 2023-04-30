@@ -2,6 +2,8 @@ import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import { useSmartAccountContext } from "@/contexts/SmartAccountContext"
 import { useWeb3AuthContext } from "@/contexts/SocialLoginContext"
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -23,6 +25,7 @@ const Button = ({ children, onClickFn }) => {
 };
 
 export default function Home() {
+  const router = useRouter()
   const {
     address,
     loading: eoaLoading,
@@ -36,6 +39,10 @@ export default function Home() {
     loading: scwLoading,
     setSelectedAccount,
   } = useSmartAccountContext();
+
+  useEffect(() => {
+    if (!!address) router.push("/home")
+  }, [address])
 
   console.log("address", address);
   return (
